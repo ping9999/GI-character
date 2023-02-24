@@ -62,7 +62,7 @@
                         <th>S.N.</th>
                         <th>Title</th>
                         <th>Image</th>
-                        <th>describe</th>
+           
                     </tr>
 
                     <?php 
