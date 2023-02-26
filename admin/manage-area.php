@@ -104,7 +104,7 @@
                                                     //Display the Image
                                                     ?>
                                                     
-                                                    <img src="<?php echo SITEURL; ?>images/area/<?php echo $image_name; ?>" width="100px" >
+                                                    <img src="<?php echo SITEURL; ?>images/area/<?php echo $image_name; ?>" width="200px" >
                                                     
                                                     <?php
                                                 }

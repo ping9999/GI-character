@@ -19,6 +19,7 @@
         $title = $row2['title'];
         $description = $row2['description'];
         $current_image = $row2['image_name'];
+        $W_current_image = $row2['W_image_name'];
         $current_area = $row2['area_id'];
 
     }
@@ -55,7 +56,7 @@
 
     
             <tr>
-                <td>Current Image: </td>
+                <td>Current Avartar Image: </td>
                 <td>
                     <?php 
                         if($current_image == "")
@@ -73,11 +74,36 @@
                     ?>
                 </td>
             </tr>
+            <tr>
+                <td>Current  Wallpages Image: </td>
+                <td>
+                    <?php 
+                        if($W_current_image == "")
+                        {
+                            //Image not Available 
+                            echo "<div class='error'>Image not Available.</div>";
+                        }
+                        else
+                        {
+                            //Image Available
+                            ?>
+                            <img src="<?php echo SITEURL; ?>images/char/<?php echo $W_current_image; ?>" width="100%">
+                            <?php
+                        }
+                    ?>
+                </td>
+            </tr>
 
             <tr>
-                <td>Select New Image: </td>
+                <td>Select New Avatar Image: </td>
                 <td>
                     <input type="file" name="image">
+                </td>
+            </tr>
+            <tr>
+                <td>Select New Wallpages Image: </td>
+                <td>
+                    <input type="file" name="W_image">
                 </td>
             </tr>
 
@@ -128,6 +154,8 @@
                 <td>
                     <input type="hidden" name="id" value="<?php echo $id; ?>">
                     <input type="hidden" name="current_image" value="<?php echo $current_image; ?>">
+                    <input type="hidden" name="current_image" value="<?php echo $W_current_image; ?>">
+
 
                     <input type="submit" name="submit" value="Update char" class="btn-secondary">
                 </td>
@@ -148,6 +176,7 @@
                 $title = $_POST['title'];
                 $description = $_POST['description'];
                 $current_image = $_POST['current_image'];
+                $W_current_image = $_POST['W_current_image'];
                 $area = $_POST['area'];
                 //2. Upload the image if selected
 
@@ -217,13 +246,59 @@
                     $image_name = $current_image; //Default Image when Button is not Clicked
                 }
 
-                
+                if(isset($_FILES['W_image']['name']))
+                {
+                    //Get the details of the selected image
+                    $W_image_name = $_FILES['W_image']['name'];
+
+                    //Check Whether the Image is Selected or not and upload image only if selected
+                    if($W_image_name!="")
+                    {
+                        // Image is SElected
+                        //A. REnamge the Image
+                        //Get the extension of selected image (jpg, png, gif, etc.) "vijay-thapa.jpg" vijay-thapa jpg
+                        $W_ext = end(explode('.', $W_image_name));
+
+                        // Create New Name for Image
+                        $W_image_name = "W-char-Name-".rand(0000,9999).".".$ext; //New Image Name May Be "W-char-Name-657.jpg"
+
+                        //B. Upload the Image
+                        //Get the Src Path and DEstinaton path
+
+                        // Source path is the current location of the image
+                        $W_src = $_FILES['W_image']['tmp_name'];
+
+                        //Destination Path for the image to be uploaded
+                        $W_dst = "../images/char/".$W_image_name;
+
+                        //Finally Uppload the char image
+                        $W_upload = move_uploaded_file($W_src, $W_dst);
+
+                        //check whether image uploaded of not
+                        if($W_upload==false)
+                        {
+                            //Failed to Upload the image
+                            //REdirect to Add char Page with Error Message
+                            $_SESSION['W_upload'] = "<div class='error'>Failed to Upload  Wallpager Image.</div>";
+                            header('location:'.SITEURL.'admin/add-char.php');
+                            //STop the process
+                            die();
+                        }
+
+                    }
+
+                }
+                else
+                {
+                    $W_image_name = ""; //SEtting DEfault Value as blank
+                }
 
                 //4. Update the char in Database
                 $sql3 = "UPDATE tbl_char SET 
                     title = '$title',
                     description = '$description',
                     image_name = '$image_name',
+                    W_image_name = '$W_image_name',
                     area_id = '$area'
                     WHERE id=$id
                 ";

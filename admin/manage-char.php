@@ -48,7 +48,11 @@
                     <tr>
                         <th>S.N.</th>
                         <th>Title</th>
-                        <th>Image</th>
+                        <th>Description</th>
+                        <th>Avatar Image</th>
+                        <th>Wallpager Image</th>
+
+
                     </tr>
 
                     <?php 
@@ -73,12 +77,17 @@
                                 //get the values from individual columns
                                 $id = $row['id'];
                                 $title = $row['title'];
+                                $description = $row['description'];
                                 $image_name = $row['image_name'];
+                                $W_image_name = $row['W_image_name'];
+
                                 ?>
 
                                 <tr>
                                     <td><?php echo $sn++; ?>. </td>
                                     <td><?php echo $title; ?></td>
+                                    <td><textarea name="description" cols="30" rows="7" disabled><?php echo $description; ?></textarea></td>
+
                                     <td>
                                         <?php  
                                             //CHeck whether we have image or not
@@ -97,8 +106,25 @@
                                         ?>
                                     </td>
                                     <td>
-                                        <a href="<?php echo SITEURL; ?>admin/update-char.php?id=<?php echo $id; ?>" class="btn-secondary">Update char</a>
-                                        <a href="<?php echo SITEURL; ?>admin/delete-char.php?id=<?php echo $id; ?>&image_name=<?php echo $image_name; ?>" class="btn-danger">Delete char</a>
+                                        <?php  
+                                            //CHeck whether we have image or not
+                                            if($W_image_name=="")
+                                            {
+                                                //WE do not have image, DIslpay Error Message
+                                                echo "<div class='error'>Wallpager Image not Added.</div>";
+                                            }
+                                            else
+                                            {
+                                                //WE Have Image, Display Image
+                                                ?>
+                                                <img src="<?php echo SITEURL; ?>images/char/<?php echo $W_image_name; ?>" width="200px">
+                                                <?php
+                                            }
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <a href="<?php echo SITEURL; ?>admin/update-char.php?id=<?php echo $id; ?>" class="btn-secondary">Update</a>
+                                        <a href="<?php echo SITEURL; ?>admin/delete-char.php?id=<?php echo $id; ?>&image_name=<?php echo $image_name; ?>" class="btn-danger">Delete</a>
                                     </td>
                                 </tr>
 
