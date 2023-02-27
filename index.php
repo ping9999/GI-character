@@ -111,7 +111,7 @@
                 $id = $row['id'];
                 $image_name = $row['image_name'];
                 ?>
-
+                <a href="<?php echo SITEURL; ?>char-detail.php?char_id=<?php echo $id; ?>">
                 <div class="char-menu-box">
                     <div class="char-menu-img">
                         <?php 
@@ -132,7 +132,7 @@
                         
                     </div>
                 </div>
-
+                    </a>
                 <?php
             }
         }

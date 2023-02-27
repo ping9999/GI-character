@@ -7,8 +7,8 @@
         {
             //area id is set and get the id
             $area_id = $_GET['area_id'];
-            // Get the area Title Based on area ID
-            $sql = "SELECT title FROM tbl_area WHERE id=$area_id";
+            // Get the area * Based on area ID
+            $sql = "SELECT * FROM tbl_area WHERE id=$area_id";
 
             //Execute the Query
             $res = mysqli_query($conn, $sql);
@@ -17,6 +17,8 @@
             $row = mysqli_fetch_assoc($res);
             //Get the TItle
             $area_title = $row['title'];
+            $area_char = $row['image_name'];
+
         }
         else
         {
@@ -31,7 +33,7 @@
     <section class="char-search text-center">
         <div class="container">
             
-            <h2>chars on <a href="#" class="text-white">"<?php echo $area_title; ?>"</a></h2>
+            <h2>Character in <a href="#" class="text-white">"<?php echo $area_title; ?>"</a></h2>
 
         </div>
     </section>
@@ -41,8 +43,8 @@
 
     <!-- char MEnu Section Starts Here -->
     <section class="char-menu">
-        <div class="container">
-            <h2 class="text-center">char</h2>
+        <div class="container" style="background:url(<?php echo SITEURL; ?>images/area/<?php echo $area_char; ?>) no-repeat; background-size:cover;">
+            <h2 class="text-center">Character</h2>
 
             <?php 
             
@@ -69,6 +71,7 @@
                         
                         <div class="char-menu-box" style="width:100%">
                             <div class="char-menu-img" style="width:10%">
+                            <a href="<?php echo SITEURL; ?>char-detail.php?char_id=<?php echo $id; ?>">
                                 <?php 
                                     if($image_name=="")
                                     {
@@ -79,11 +82,11 @@
                                     {
                                         //Image Available
                                         ?>
-                                        <img src="<?php echo SITEURL; ?>images/char/<?php echo $image_name; ?>" alt="Chicke Hawain Pizza" class="img-responsive img-curve">
+                                        <img src="<?php echo SITEURL; ?>images/char/<?php echo $image_name; ?>" alt="char" class="img-responsive img-curve">
                                         <?php
                                     }
                                 ?>
-                                
+                            </a>
                             </div>
 
                             <div class="char-menu-desc">

@@ -44,7 +44,7 @@
                                     {
                                         //Image Available
                                         ?>
-                                        <img src="<?php echo SITEURL; ?>images/area/<?php echo $image_name; ?>" alt="Pizza" class="img-responsive img-curve">
+                                        <img src="<?php echo SITEURL; ?>images/area/<?php echo $image_name; ?>" alt="area" class="img-responsive img-curve">
                                         <?php
                                     }
                                 ?>
